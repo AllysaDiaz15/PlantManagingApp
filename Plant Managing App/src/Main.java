@@ -1,11 +1,23 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
         List<String> plants = new ArrayList<>();
+
+        try (Scanner filescanner = new Scanner(new File("test.txt"))) {
+            while (filescanner.hasNextLine()) {
+                String plant = filescanner.nextLine();
+                plants.add(plant);
+            }
+            System.out.println("Plants loaded from file!");
+        } catch (FileNotFoundException e) {
+            System.out.println("No saved plants found!");
+        }
 
         while (true) {
 
@@ -33,14 +45,38 @@ public class Main {
                     System.out.println(" -" + plant);
                 }
             } else if (choice.equals("3")) {
-                System.out.println("coming out soon");
+                if (plants.isEmpty()) {
+                    System.out.println("There are no plants on the list!");
+                }else {
+                    System.out.println("Your current Plants:");
+                    for (String plant : plants) {
+                        System.out.println("- " + plant);
+                    }
+                }
+
+                System.out.println("Enter the name of the Plant you want to remove:");
+                String plantToRemove = scanner.nextLine().toLowerCase();
+
+                if (plants.remove(plantToRemove)) {
+                    System.out.println("removed: " + plantToRemove);
+                } else {
+                    System.out.println("Plant '" + plantToRemove + "' not found!");
+                }
             } else if (choice.equals("4")) {
+                try (FileWriter writer = new FileWriter("test.txt")){
+                    for (String plant : plants) {
+                        writer.write(plant + "\n");
+                    }
+                    System.out.println("File has been written");
+                }
+                catch(IOException e){
+                    System.out.println("Could not write file");
+                }
                 System.out.println("Goodbye!");
                 break;
             } else {
                 System.out.println("Invalid choice! Please try again.");
             }
-                scanner.close();
         }
     }
 }
