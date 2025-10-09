@@ -1,33 +1,39 @@
-import java.time.LocalDate;
-import java.util.Scanner;
-
 public class Plant {
-    Scanner scanner = new Scanner(System.in);
+    public String plantName;
+    public String description;
+    public String careNotes;
+    public String preferredWater;
+    public String wateringSchedule;
+    public String lastWatered;
+    public String fertilizingSchedule;
+    public String lastFertilized;
+    public String repotted;
 
-    String plantName;
-    String description;
-    String careNotes;
-    String prefferedWater;
-    String wateringSchedule;
-    LocalDate lastWatered;
-    String fertilizingSchedule;
-    LocalDate lastFertilized;
-    LocalDate repotted;
-
-    Plant  (String pPlantName ,String pDescription, String pCareNotes, String pPrefferedWater, String pWateringSchedule,
-            LocalDate pLastWatered, String pFertilizingSchedule, LocalDate pLastFertilized,
-            LocalDate pRepotted) {
+    Plant  (String pPlantName, String pDescription, String pCareNotes, String pPreferredWater, String pWateringSchedule,
+            String pLastWatered, String pFertilizingSchedule, String pLastFertilized,
+            String pRepotted) {
 
         this.plantName = pPlantName;
         this.description = pDescription;
         this.careNotes = pCareNotes;
-        this.prefferedWater = pPrefferedWater;
+        this.preferredWater = pPreferredWater;
         this.wateringSchedule = pWateringSchedule;
         this.lastWatered = pLastWatered;
         this.fertilizingSchedule = pFertilizingSchedule;
         this.lastFertilized = pLastFertilized;
         this.repotted = pRepotted;
+    }
 
+    public void displayPlantDetails() {
+        System.out.println("Name: " + this.plantName);
+        System.out.println("Description: " + this.description);
+        System.out.println("Notes: " + this.careNotes);
+        System.out.println("Preferred water: " + this.preferredWater);
+        System.out.println("Watering schedule: " + this.wateringSchedule);
+        System.out.println("Last watered: " + this.lastWatered);
+        System.out.println("Fertilizing schedule: " + this.fertilizingSchedule);
+        System.out.println("Last fertilized: " + this.lastFertilized);
+        System.out.println("Repotted on: " + this.repotted);
 
     }
 }

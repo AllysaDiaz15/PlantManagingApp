@@ -1,13 +1,23 @@
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+
 import java.io.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         Scanner scanner = new Scanner(System.in);
         List<Plant> plants = new ArrayList<>();
+        Gson gson = new Gson();
+
+        JsonReader reader = new JsonReader(new FileReader("save.json"));
+        Plant[] plantsFromFile = gson.fromJson(reader, Plant[].class);
+
+        plants = Arrays.stream(plantsFromFile).collect(Collectors.toList());
 
         while (true) {
             System.out.println("\nWhat would you like to do?");
@@ -56,10 +66,10 @@ public class Main {
                             carenotes,
                             prefferedWater,
                             wateringSchedule,
-                            LocalDate.parse(lastWatered),
+                            lastWatered,
                             fertilizingSchedule,
-                            LocalDate.parse(lastFertilized),
-                            LocalDate.parse(repotted));
+                            lastFertilized,
+                            repotted);
 
                     plants.add(newPlant);
 
@@ -71,25 +81,66 @@ public class Main {
                 for (Plant plant : plants) {
                     System.out.println(plant.plantName);
                 }
+
+                    System.out.println("would you do some changes on your plants?");
+                    System.out.println("1. Edit Plants");
+                    System.out.println("2. Remove Plants");
+                    System.out.println("3. exit");
+                    System.out.println("Enter the number of your choice: ");
+                    String changes = scanner.nextLine();
+
+                    if (changes.equals("1")) {
+                        System.out.println("Which plant would you want to edit?");
+                        System.out.println("Current Plants");
+                        for (Plant plantInList : plants) {
+                            System.out.println(plantInList.plantName);
+                        }
+
+                        System.out.println("Enter the name of the Plant to edit");
+                        String plantName = scanner.nextLine().toLowerCase();
+
+                        boolean isReal = false;
+                        for (Plant plantInList : plants) {
+                            if (plantInList.plantName.equals(plantName)) {
+                                plantInList.displayPlantDetails();
+                                isReal = true;
+                            }
+                        }
+                        if(!isReal) {
+                            System.out.println("Plant doesnt exist!!!");
+                        }
+
+                    }
+
             } else if (choice.equals("3")) {
                 if (plants.isEmpty()) {
                     System.out.println("There are no plants on the list");
-                }else {
+                } else {
                     System.out.println("Your Current Plants");
                     for (Plant plant : plants)
                         System.out.println(plant.plantName);
+
+                    System.out.println("Enter the name of the plant you want to remove: ");
+                    String plantToRemove = scanner.nextLine().toLowerCase();
+                    if (plants.remove(plantToRemove)) {
+                        System.out.println("removed: " + plantToRemove);
+                    } else {
+                        System.out.println("Plant '" + plantToRemove + "' not found!");
+                    }
                 }
+            } else if (choice.equals("4")) {
+
+                String plantlist = gson.toJson(plants);
+                System.out.println("Plant list" + plantlist);
+                try (FileWriter writer = new FileWriter("save.json")){
+                    writer.write(plantlist);
+                    System.out.println("File has been written");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                System.out.println("goodbye");
+                return;
             }
-
-            System.out.println("Enter the name of the plant you want to remove: ");
-            String plantToRemove = scanner.nextLine(). toLowerCase();
-
-            if (plants.remove(plantToRemove)) {
-                    System.out.println("removed: " + plantToRemove);
-                } else {
-                    System.out.println("Plant '" + plantToRemove + "' not found!");
-                }
-
         }
     }
 }
