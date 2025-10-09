@@ -25,15 +25,15 @@ public class Plant {
     }
 
     public void displayPlantDetails() {
-        System.out.println("Name: " + this.plantName);
-        System.out.println("Description: " + this.description);
-        System.out.println("Notes: " + this.careNotes);
-        System.out.println("Preferred water: " + this.preferredWater);
-        System.out.println("Watering schedule: " + this.wateringSchedule);
-        System.out.println("Last watered: " + this.lastWatered);
-        System.out.println("Fertilizing schedule: " + this.fertilizingSchedule);
-        System.out.println("Last fertilized: " + this.lastFertilized);
-        System.out.println("Repotted on: " + this.repotted);
+        System.out.println("a.Name: " + this.plantName);
+        System.out.println("b.Description: " + this.description);
+        System.out.println("c.Notes: " + this.careNotes);
+        System.out.println("d.Preferred water: " + this.preferredWater);
+        System.out.println("e.Watering schedule: " + this.wateringSchedule);
+        System.out.println("f.Last watered: " + this.lastWatered);
+        System.out.println("g.Fertilizing schedule: " + this.fertilizingSchedule);
+        System.out.println("h.Last fertilized: " + this.lastFertilized);
+        System.out.println("i.Repotted on: " + this.repotted);
 
     }
 }
